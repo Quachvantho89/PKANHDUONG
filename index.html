@@ -1,1 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Kết Quả Siêu Âm</title>
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; margin: 0; padding: 20px; background: #f0f2f5; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2, h3 { text-align: center; margin: 5px 0; }
+        .header-clinic { text-transform: uppercase; font-weight: bold; color: #2c3e50; font-size: 1.2em; }
+        .section-title { font-weight: bold; text-decoration: underline; margin-top: 20px; font-size: 1.1em; }
+        .row { display: flex; flex-wrap: wrap; margin-bottom: 10px; align-items: center; }
+        .col { flex: 1; min-width: 200px; margin-bottom: 5px; }
+        label { font-weight: bold; margin-right: 5px; }
+        input[type="text"], input[type="date"], input[type="number"] { width: 60%; padding: 5px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+        .auto-calc { color: #d35400; font-weight: bold; font-size: 1.1em; }
+        textarea { width: 100%; height: 80px; padding: 5px; border: 1px solid #ccc; font-family: inherit; margin-top: 5px; border-radius: 4px; }
+        .btn-print { display: block; width: 150px; margin: 30px auto 0; padding: 10px; background: #2980b9; color: white; text-align: center; cursor: pointer; border: none; font-size: 16px; border-radius: 5px; font-weight: bold; }
+        .btn-print:hover { background: #1c5980; }
+        
+        .radio-group { margin-bottom: 15px; padding: 10px; background: #eef2f5; border-radius: 5px; border: 1px dashed #bdc3c7;}
+        .radio-group label { margin-right: 20px; cursor: pointer; font-weight: normal; color: #333; }
+        
+        /* Chế độ in: Ẩn viền, nút in, và các thành phần không cần thiết */
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; padding: 0; }
+            input[type="text"], input[type="date"], input[type="number"], textarea { border: none; outline: none; background: transparent; resize: none; padding: 0; }
+            .btn-print, .no-print, .radio-group { display: none !important; }
+            .auto-calc { color: black; }
+        }
+    </style>
+</head>
+<body>
 
+<div class="container">
+    <div class="header-clinic">PHÒNG KHÁM SẢN PHỤ KHOA</div>
+    <div style="text-align: center; font-size: 0.9em; margin-bottom: 20px;">Địa chỉ: Số 1, Đường XYZ, TP. Hà Nội | Điện thoại: 0909.123.456</div>
+    
+    <h2>PHIẾU KẾT QUẢ SIÊU ÂM THAI NHI</h2>
+
+    <div class="section-title">I. THÔNG TIN HÀNH CHÍNH</div>
+    <div class="row">
+        <div class="col"><label>Họ và tên:</label><input type="text" placeholder="Nhập tên bệnh nhân"></div>
+        <div class="col"><label>Năm sinh:</label><input type="text" placeholder="VD: 1995"></div>
+    </div>
+    <div class="row">
+        <div class="col"><label>Ngày khám:</label><input type="text" value="" id="currentDate"></div>
+        <div class="col"><label>Bác sĩ chỉ định:</label><input type="text"></div>
+    </div>
+
+    <div class="section-title">II. TÍNH TOÁN TUỔI THAI</div>
+    
+    <!-- Phần chọn cách tính (Sẽ ẩn khi in) -->
+    <div class="radio-group no-print">
+        <strong>Chọn cơ sở tính:</strong><br>
+        <label><input type="radio" name="calcMethod" value="lmp" checked> 1. Theo ngày đầu kỳ kinh cuối (LMP)</label>
+        <label><input type="radio" name="calcMethod" value="edd_us"> 2. Theo dự kiến sinh (Siêu âm 3 tháng đầu)</label>
+    </div>
+
+    <!-- Nhập liệu ngày dựa trên lựa chọn -->
+    <div class="row" id="divLMP">
+        <div class="col"><label>Kỳ kinh cuối (LMP):</label><input type="date" id="lmpDate"></div>
+    </div>
+    <div class="row" id="divEDD_US" style="display: none;">
+        <div class="col"><label>Dự kiến sinh (Theo SA cũ):</label><input type="date" id="eddUsDate"></div>
+    </div>
+
+    <!-- Kết quả tự động -->
+    <div class="row" style="margin-top: 10px;">
+        <div class="col">
+            <label>Tuổi thai hôm nay:</label> 
+            <span class="auto-calc" id="gaResult">...</span>
+        </div>
+        <div class="col">
+            <label>Ngày dự kiến sinh (EDD):</label> 
+            <span class="auto-calc" id="eddResult">...</span>
+        </div>
+    </div>
+
+    <div class="section-title">III. KẾT QUẢ ĐO ĐẠC (BIOMETRY)</div>
+    <div class="row">
+        <div class="col"><label>Số lượng thai:</label><input type="text" value="01"></div>
+        <div class="col"><label>Ngôi thai:</label><input type="text" value="Đầu"></div>
+    </div>
+    <div class="row">
+        <div class="col"><label>Lưỡng đỉnh (BPD):</label><input type="text" placeholder="... mm"></div>
+        <div class="col"><label>Chu vi vòng đầu (HC):</label><input type="text" placeholder="... mm"></div>
+    </div>
+    <div class="row">
+        <div class="col"><label>Chu vi bụng (AC):</label><input type="text" placeholder="... mm"></div>
+        <div class="col"><label>Chiều dài xương đùi (FL):</label><input type="text" placeholder="... mm"></div>
+    </div>
+    <div class="row">
+        <div class="col" style="flex: 100%;"><label>Ước lượng cân nặng (EFW):</label><input type="text" placeholder="... gram"></div>
+    </div>
+
+    <div class="section-title">IV. HÌNH THÁI & PHẦN PHỤ</div>
+    <div class="row">
+        <div class="col"><label>Tim thai:</label><input type="text" value="140 l/p (Đều)"></div>
+        <div class="col"><label>Chỉ số ối (AFI):</label><input type="text" value="Bình thường"></div>
+    </div>
+    <div class="row">
+        <div class="col" style="flex: 100%;"><label>Vị trí nhau bám:</label><input type="text" value="Mặt trước, độ 1"></div>
+    </div>
+
+    <div class="section-title">V. KẾT LUẬN & ĐỀ NGHỊ</div>
+    <textarea placeholder="Nhập kết luận siêu âm... (Ví dụ: Một thai sống trong tử cung phát triển tương đương tuổi thai)"></textarea>
+    
+    <div class="row" style="margin-top: 20px;">
+        <div class="col"></div>
+        <div class="col" style="text-align: center;">
+            <p style="font-weight: bold; margin-bottom: 70px;">BÁC SĨ SIÊU ÂM</p>
+            <p>(Ký, ghi rõ họ tên)</p>
+        </div>
+    </div>
+
+    <button class="btn-print" onclick="window.print()">🖨️ IN KẾT QUẢ</button>
+</div>
+
+<script>
+    // Thiết lập ngày hiện tại (Bỏ qua giờ để tính toán chính xác số ngày)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Hiển thị ngày khám trên giao diện
+    const displayToday = new Date();
+    document.getElementById('currentDate').value = displayToday.toLocaleDateString('vi-VN');
+
+    // Các thành phần DOM
+    const radioLmp = document.querySelector('input[value="lmp"]');
+    const radioEdd = document.querySelector('input[value="edd_us"]');
+    const divLmp = document.getElementById('divLMP');
+    const divEdd = document.getElementById('divEDD_US');
+    const lmpInput = document.getElementById('lmpDate');
+    const eddInput = document.getElementById('eddUsDate');
+    const gaResult = document.getElementById('gaResult');
+    const eddResult = document.getElementById('eddResult');
+
+    // Đổi hiển thị form nhập ngày tùy theo lựa chọn
+    function updateUI() {
+        if (radioLmp.checked) {
+            divLmp.style.display = 'flex';
+            divEdd.style.display = 'none';
+            calculateByLMP();
+        } else {
+            divLmp.style.display = 'none';
+            divEdd.style.display = 'flex';
+            calculateByEDD_US();
+        }
+    }
+
+    // Gắn sự kiện lắng nghe thay đổi
+    radioLmp.addEventListener('change', updateUI);
+    radioEdd.addEventListener('change', updateUI);
+    lmpInput.addEventListener('change', calculateByLMP);
+    eddInput.addEventListener('change', calculateByEDD_US);
+
+    // Hàm format số tuần/ngày
+    function formatGA(daysDiff) {
+        if (daysDiff < 0) return "Chưa thụ thai";
+        const weeks = Math.floor(daysDiff / 7);
+        const days = daysDiff % 7;
+        return `${weeks} tuần ${days} ngày`;
+    }
+
+    // 1. Tính toán dựa trên Kinh cuối (LMP)
+    function calculateByLMP() {
+        if (!lmpInput.value) return;
+        const lmp = new Date(lmpInput.value);
+        lmp.setHours(0, 0, 0, 0);
+
+        if (!isNaN(lmp.getTime())) {
+            // EDD = LMP + 280 ngày
+            const edd = new Date(lmp);
+            edd.setDate(edd.getDate() + 280);
+            eddResult.innerText = edd.toLocaleDateString('vi-VN');
+
+            // Tuổi thai = Hôm nay - LMP
+            const diffTime = today - lmp;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            gaResult.innerText = formatGA(diffDays);
+        }
+    }
+
+    // 2. Tính toán dựa trên Dự kiến sinh siêu âm 3 tháng đầu
+    function calculateByEDD_US() {
+        if (!eddInput.value) return;
+        const edd = new Date(eddInput.value);
+        edd.setHours(0, 0, 0, 0);
+
+        if (!isNaN(edd.getTime())) {
+            // Hiển thị lại đúng ngày EDD đó
+            eddResult.innerText = edd.toLocaleDateString('vi-VN');
+            
+            // Tìm LMP ảo (Virtual LMP) = EDD - 280 ngày
+            const virtualLmp = new Date(edd);
+            virtualLmp.setDate(virtualLmp.getDate() - 280);
+
+            // Tuổi thai = Hôm nay - LMP Ảo
+            const diffTime = today - virtualLmp;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            gaResult.innerText = formatGA(diffDays);
+        }
+    }
+</script>
+
+</body>
+</html>
