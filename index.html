@@ -29,9 +29,9 @@
         .img-box img { max-width: 100%; max-height: 250px; border: 1px solid #ccc; border-radius: 4px; object-fit: cover;}
         .btn-remove-img { position: absolute; top: 5px; right: 5px; background: red; color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; font-weight: bold;}
         .morph-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 20px; }
-        .morph-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted #ddd; padding: 4px 0; }
-        .morph-item label { font-weight: normal; font-style: italic; }
-        .morph-item input { width: 140px; text-align: right; border: none; background: transparent; font-weight: bold; color: #2c3e50; }
+        .morph-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted #ddd; padding: 5px 0; }
+        .morph-item label { font-weight: normal; font-style: italic; font-size: 0.95em;}
+        .morph-item input { width: 120px; text-align: right; border: none; background: transparent; font-weight: bold; color: #2c3e50; }
         .signature-area { display: flex; justify-content: space-between; margin-top: 20px; text-align: center; }
         .signature-box { width: 40%; }
         .print-only { display: none; } .no-print { display: block; }
@@ -205,8 +205,47 @@
         }
     }
 
-    // Template Definitions
-    const t_thai5D = `<div class="section-title">III. SINH TRẮC HỌC (BIOMETRY)</div><div class="row"><div class="col"><label>Ngôi thai:</label><input type="text" value="Đầu"></div><div class="col"><label>Tim thai:</label><input type="text" value="145 l/p"></div></div><div class="row"><div class="col"><label>BPD:</label><input type="text" class="short-input"> mm</div><div class="col"><label>HC:</label><input type="text" class="short-input"> mm</div></div><div class="row"><div class="col"><label>AC:</label><input type="text" class="short-input"> mm</div><div class="col"><label>FL:</label><input type="text" class="short-input"> mm</div></div><div class="row"><div class="col-full"><label>Ước lượng cân nặng (EFW):</label><input type="text" style="font-weight:bold; color:#c0392b; width:30%;"> gram</div></div><div class="section-title">IV. HÌNH THÁI HỌC</div><div class="morph-grid"><div><div class="morph-item"><label>- Đầu mặt cổ:</label><input type="text" value="Bình thường"></div><div class="morph-item"><label>- Tim phổi:</label><input type="text" value="Bình thường"></div></div><div><div class="morph-item"><label>- Ổ bụng:</label><input type="text" value="Bình thường"></div><div class="morph-item"><label>- Tứ chi:</label><input type="text" value="Bình thường"></div></div></div><div class="section-title">V. PHẦN PHỤ CỦA THAI</div><div class="row"><div class="col"><label>Vị trí nhau bám:</label><input type="text" value="Mặt trước"></div><div class="col"><label>Nước ối (AFI):</label><input type="text" value="Bình thường"></div></div>`;
+    // --- MẪU FORM SIÊU ÂM THAI LỚN ĐƯỢC NÂNG CẤP CHI TIẾT ---
+    const t_thai5D = `
+        <div class="section-title">III. SINH TRẮC HỌC (BIOMETRY)</div>
+        <div class="row"><div class="col"><label>Ngôi thai:</label><input type="text" value="Đầu"></div><div class="col"><label>Tim thai:</label><input type="text" value="145 l/p"></div></div>
+        <div class="row"><div class="col"><label>BPD (ĐK lưỡng đỉnh):</label><input type="text" class="short-input"> mm</div><div class="col"><label>HC (Chu vi vòng đầu):</label><input type="text" class="short-input"> mm</div></div>
+        <div class="row"><div class="col"><label>AC (Chu vi vòng bụng):</label><input type="text" class="short-input"> mm</div><div class="col"><label>FL (Chiều dài X.đùi):</label><input type="text" class="short-input"> mm</div></div>
+        <div class="row"><div class="col-full"><label>Ước lượng cân nặng (EFW):</label><input type="text" style="font-weight:bold; color:#c0392b; width:30%;"> gram</div></div>
+        
+        <div class="section-title">IV. KHẢO SÁT HÌNH THÁI HỌC 5D (ANOMALY SCAN)</div>
+        <div class="morph-grid">
+            <div>
+                <strong style="color: #2980b9; font-size: 0.95em;">1. Thần kinh - Đầu mặt cổ</strong>
+                <div class="morph-item"><label>- Vòm sọ, đường giữa:</label><input type="text" value="Bình thường"></div>
+                <div class="morph-item"><label>- Não thất bên, hố sau:</label><input type="text" value="Bình thường"></div>
+                <div class="morph-item"><label>- Môi trên, xương mũi:</label><input type="text" value="Bình thường"></div>
+                <div class="morph-item"><label>- Hai hố mắt, khẩu cái mềm:</label><input type="text" value="Quan sát thấy"></div>
+                
+                <strong style="display:block; margin-top:8px; color: #2980b9; font-size: 0.95em;">2. Lồng ngực - Tim thai</strong>
+                <div class="morph-item"><label>- Lồng ngực, hai phổi:</label><input type="text" value="Bình thường"></div>
+                <div class="morph-item"><label>- Mặt cắt 4 buồng tim:</label><input type="text" value="Bình thường"></div>
+                <div class="morph-item"><label>- Đường ra 2 thất:</label><input type="text" value="Bình thường"></div>
+                <div class="morph-item"><label>- Vách liên thất/liên nhĩ:</label><input type="text" value="Bình thường"></div>
+            </div>
+            <div>
+                <strong style="color: #2980b9; font-size: 0.95em;">3. Hệ tiêu hóa - Tiết niệu</strong>
+                <div class="morph-item"><label>- Thành bụng, cuống rốn:</label><input type="text" value="Đóng kín"></div>
+                <div class="morph-item"><label>- Dạ dày, bóng mật:</label><input type="text" value="Quan sát thấy"></div>
+                <div class="morph-item"><label>- Hai thận, bàng quang:</label><input type="text" value="Bình thường"></div>
+                
+                <strong style="display:block; margin-top:8px; color: #2980b9; font-size: 0.95em;">4. Cột sống - Tứ chi</strong>
+                <div class="morph-item"><label>- Cột sống (cổ, ngực, TL):</label><input type="text" value="Liên tục"></div>
+                <div class="morph-item"><label>- Xương dài tứ chi:</label><input type="text" value="Bình thường"></div>
+                <div class="morph-item"><label>- Bàn tay, bàn chân:</label><input type="text" value="Quan sát thấy"></div>
+            </div>
+        </div>
+        
+        <div class="section-title">V. PHẦN PHỤ CỦA THAI</div>
+        <div class="row"><div class="col"><label>Vị trí nhau bám:</label><input type="text" value="Mặt trước"></div><div class="col"><label>Độ trưởng thành:</label><input type="text" value="Độ 1"></div></div>
+        <div class="row"><div class="col-full"><label>Chỉ số nước ối (AFI):</label><input type="text" value="Bình thường" style="width: 80%;"></div></div>
+    `;
+
     const t_thai12W = `<div class="section-title">III. KẾT QUẢ ĐO ĐẠC</div><div class="row"><div class="col"><label>Chiều dài đầu mông (CRL):</label><input type="text" class="short-input"> mm</div><div class="col"><label>Tim thai:</label><input type="text" value="160 l/p"></div></div><div class="row" style="background:#fdf2e9; padding:5px;"><div class="col-full"><label style="color:#c0392b;">Khoảng sáng sau gáy (NT):</label><input type="text" class="short-input" style="font-weight:bold;"> mm</div></div><div class="section-title">IV. HÌNH THÁI SỚM</div><div class="morph-grid"><div><div class="morph-item"><label>- Vòm sọ, đường giữa:</label><input type="text" value="Quan sát thấy"></div><div class="morph-item"><label>- Xương mũi (NB):</label><input type="text" value="Hiện diện"></div></div><div><div class="morph-item"><label>- Dạ dày, Bàng quang:</label><input type="text" value="Quan sát thấy"></div><div class="morph-item"><label>- Tứ chi:</label><input type="text" value="Đủ 4 chi"></div></div></div>`;
     const t_phuKhoa = `<div class="section-title">II. KẾT QUẢ SIÊU ÂM</div><div class="row"><div class="col-full"><label>Tử cung:</label><input type="text" class="long-input" value="Tư thế ngả trước, kích thước bình thường, âm vang đồng nhất."></div></div><div class="row"><div class="col-full"><label>Niêm mạc:</label><input type="text" style="width:20%;"> mm.</div></div><div class="row"><div class="col-full"><label>Buồng trứng 2 bên:</label><input type="text" class="long-input" value="Bình thường, không có nang."></div></div><div class="row"><div class="col-full"><label>Cùng đồ:</label><input type="text" value="Không có dịch"></div></div>`;
 
