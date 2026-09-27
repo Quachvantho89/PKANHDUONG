@@ -7,65 +7,48 @@
     <style>
         body { font-family: 'Times New Roman', Times, serif; margin: 0; padding: 20px; background: #e9ecef; font-size: 15px; }
         .container { max-width: 850px; margin: auto; background: white; padding: 20px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 8px; }
-        
-        /* Header */
         .header-wrapper { display: flex; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; margin-bottom: 15px; }
         .header-left { flex: 1; text-align: center; }
         .clinic-name { color: #d35400; font-size: 1.3em; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
         .clinic-info { font-size: 0.9em; line-height: 1.4; color: #34495e; }
-        
         h2.title { text-align: center; font-size: 1.5em; font-weight: bold; margin: 15px 0; color: #2980b9; text-transform: uppercase; }
         .section-title { font-weight: bold; background: #f0f4f8; padding: 5px 10px; border-left: 4px solid #2980b9; margin: 15px 0 10px 0; font-size: 1.1em; text-transform: uppercase;}
-        
         .row { display: flex; flex-wrap: wrap; margin-bottom: 8px; align-items: center; }
         .col { flex: 1; min-width: 250px; padding-right: 10px; }
         .col-full { flex: 100%; }
-        
         label { font-weight: bold; margin-right: 5px; color: #2c3e50; }
-        input[type="text"], input[type="date"], input[type="number"], select { 
-            width: 55%; padding: 4px 8px; border: 1px dotted #95a5a6; border-radius: 4px; font-family: inherit; font-size: 15px; outline: none;
-        }
-        input.short-input { width: 30%; }
-        input.long-input { width: 80%; }
+        input[type="text"], input[type="date"], input[type="number"], select { width: 55%; padding: 4px 8px; border: 1px dotted #95a5a6; border-radius: 4px; font-family: inherit; font-size: 15px; outline: none; }
+        input.short-input { width: 30%; } input.long-input { width: 80%; }
         .auto-calc { color: #c0392b; font-weight: bold; font-size: 1.1em; }
         textarea { width: 100%; height: 60px; padding: 8px; border: 1px dotted #95a5a6; font-family: inherit; font-size: 15px; margin-top: 5px; border-radius: 4px; box-sizing: border-box; resize: vertical; }
-        
         .radio-group { margin-bottom: 10px; padding: 8px; background: #fdfefe; border: 1px dashed #bdc3c7; border-radius: 5px; }
         .radio-group label { margin-right: 15px; cursor: pointer; font-weight: normal; color: #333; }
-
-        /* Hình ảnh */
         .image-tools { background: #e8f8f5; padding: 10px; border: 1px dashed #1abc9c; border-radius: 5px; margin-bottom: 15px; text-align: center;}
         .image-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
         .img-box { position: relative; width: 100%; text-align: center; }
         .img-box img { max-width: 100%; max-height: 250px; border: 1px solid #ccc; border-radius: 4px; object-fit: cover;}
         .btn-remove-img { position: absolute; top: 5px; right: 5px; background: red; color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; font-weight: bold;}
-
-        /* Hình thái */
         .morph-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 20px; }
         .morph-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dotted #ddd; padding: 4px 0; }
         .morph-item label { font-weight: normal; font-style: italic; }
         .morph-item input { width: 140px; text-align: right; border: none; background: transparent; font-weight: bold; color: #2c3e50; }
-
-        /* Chữ ký & Nút bấm */
         .signature-area { display: flex; justify-content: space-between; margin-top: 20px; text-align: center; }
         .signature-box { width: 40%; }
-        .print-only { display: none; }
-        .no-print { display: block; }
-        
-        .action-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
-        .btn { padding: 12px 20px; color: white; text-align: center; cursor: pointer; border: none; font-size: 15px; border-radius: 5px; font-weight: bold; }
+        .print-only { display: none; } .no-print { display: block; }
+        .action-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 30px; flex-wrap: wrap;}
+        .btn { padding: 12px 15px; color: white; text-align: center; cursor: pointer; border: none; font-size: 14px; border-radius: 5px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);}
         .btn-print { background: #27ae60; } .btn-print:hover { background: #219150; }
         .btn-save { background: #2980b9; } .btn-save:hover { background: #1c5980; }
         .btn-excel { background: #8e44ad; } .btn-excel:hover { background: #732d91; }
-
-        /* Bảng lịch sử */
+        .btn-word { background: #e67e22; } .btn-word:hover { background: #d35400; }
         .history-container { margin-top: 40px; padding-top: 20px; border-top: 2px dashed #bdc3c7; }
-        table.history-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        .search-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+        .search-input { padding: 8px; border: 1px solid #34495e; border-radius: 4px; width: 300px; font-size: 14px; outline: none; }
+        table.history-table { width: 100%; border-collapse: collapse; font-size: 14px; }
         table.history-table th, table.history-table td { border: 1px solid #ccc; padding: 8px; text-align: left; }
         table.history-table th { background: #f0f4f8; }
         .btn-action { padding: 4px 8px; margin-right: 5px; cursor: pointer; border: none; border-radius: 3px; color: white; font-size: 12px;}
-        .btn-load { background: #f39c12; }
-        .btn-delete { background: #e74c3c; }
+        .btn-load { background: #f39c12; } .btn-delete { background: #e74c3c; }
 
         @media print {
             body { background: white; padding: 0; font-size: 14pt; }
@@ -75,8 +58,7 @@
             .print-only { display: block; font-weight: bold; font-size: 1.1em; color: black; }
             .section-title { background: transparent; border-left: none; text-decoration: underline; padding-left: 0; margin-top: 10px; margin-bottom: 5px;}
             .morph-item { border-bottom: none; }
-            .image-gallery { gap: 5px; }
-            .img-box img { max-height: 350px; border: none; }
+            .image-gallery { gap: 5px; } .img-box img { max-height: 350px; border: none; }
             .auto-calc { color: black; }
         }
     </style>
@@ -129,14 +111,12 @@
         <div class="col print-only"><label>Chỉ định:</label><span id="printChiDinhLabel">Siêu âm đơn thai 5D (Hơn 12 tuần)</span></div>
     </div>
 
-    <!-- HÌNH ẢNH -->
     <div class="image-tools no-print">
         <label for="imageUpload"><strong>📷 Chèn hình ảnh siêu âm:</strong></label>
         <input type="file" id="imageUpload" accept="image/*" multiple onchange="previewImages(event)">
     </div>
     <div class="image-gallery" id="imageGallery"></div>
 
-    <!-- TÍNH TUỔI THAI -->
     <div id="obstetricsSection">
         <div class="section-title">II. TÍNH TOÁN TUỔI THAI & DỰ KIẾN SINH</div>
         <div class="radio-group no-print">
@@ -156,42 +136,44 @@
         </div>
     </div>
 
-    <!-- FORM ĐỘNG -->
     <div id="dynamicFormContainer"></div>
 
-    <!-- KẾT LUẬN -->
     <div class="section-title" id="ketLuanTitle">KẾT LUẬN & ĐỀ NGHỊ</div>
     <textarea id="ketLuanText" style="font-weight: bold;"></textarea>
     <div class="row" style="margin-top: 10px;">
         <div class="col-full"><label>Đề nghị:</label><input type="text" id="deNghiText" value="Theo dõi định kỳ." class="long-input"></div>
     </div>
 
-    <!-- CHỮ KÝ -->
     <div class="signature-area">
         <div class="signature-box"></div>
         <div class="signature-box">
             <p style="font-weight: bold; margin-bottom: 5px;">BÁC SĨ SIÊU ÂM</p>
             <div style="height: 70px;"></div>
             <select id="doctorSelector" class="doctor-select no-print" onchange="updatePrintDoctorName()" style="font-weight:bold; font-size: 15px; padding: 5px;">
-                <option value="Bác sĩ CKI. Quách Văn Thọ">Bác sĩ CKI. Quách Văn Thọ</option>
+                <option value="BS CKI. Quách Văn Thọ">BS CKI. Quách Văn Thọ</option>
                 <option value="BS CKI. Nguyễn Khắc Thủy">BS CKI. Nguyễn Khắc Thủy</option>
             </select>
-            <div id="doctorPrintName" class="print-only" style="font-weight:bold; font-size: 1.1em;">Bác sĩ CKI. Quách Văn Thọ</div>
+            <div id="doctorPrintName" class="print-only" style="font-weight:bold; font-size: 1.1em;">BS CKI. Quách Văn Thọ</div>
         </div>
     </div>
 </div>
 
-<!-- NÚT ĐIỀU KHIỂN & LƯU TRỮ -->
 <div class="container no-print" style="margin-top: 10px; background: transparent; box-shadow: none;">
     <div class="action-buttons">
-        <button class="btn btn-print" onclick="window.print()">🖨️ IN KẾT QUẢ</button>
+        <button class="btn btn-print" onclick="window.print()">🖨️ IN KẾT QUẢ / PDF</button>
+        <button class="btn btn-word" onclick="exportHTMLToWord()">📄 XUẤT FILE WORD</button>
         <button class="btn btn-save" onclick="saveRecord()">💾 LƯU HỒ SƠ NÀY</button>
-        <button class="btn btn-excel" onclick="exportToExcel()">📊 XUẤT EXCEL DANH SÁCH</button>
+        <button class="btn btn-excel" onclick="exportToExcel()">📊 XUẤT EXCEL</button>
     </div>
 
     <div class="history-container">
-        <h3 style="margin-top: 0; color: #2c3e50;">📂 LỊCH SỬ BỆNH NHÂN ĐÃ KHÁM</h3>
-        <p style="font-size: 0.9em; color: #7f8c8d;">Dữ liệu được lưu trữ an toàn ngay trên trình duyệt máy tính của bạn.</p>
+        <div class="search-bar">
+            <h3 style="margin-top: 0; margin-bottom: 5px; color: #2c3e50;">📂 LỊCH SỬ KHÁM BỆNH</h3>
+            <div>
+                <label for="searchInput" style="font-weight: bold; font-size: 14px; margin-right: 5px;">🔍 Tìm kiếm:</label>
+                <input type="text" id="searchInput" class="search-input" placeholder="Nhập tên bệnh nhân hoặc ngày khám..." onkeyup="renderHistory()">
+            </div>
+        </div>
         <table class="history-table">
             <thead>
                 <tr>
@@ -203,19 +185,14 @@
                     <th width="120">Thao tác</th>
                 </tr>
             </thead>
-            <tbody id="historyTableBody">
-                <!-- Dữ liệu lưu sẽ hiện ở đây -->
-            </tbody>
+            <tbody id="historyTableBody"></tbody>
         </table>
     </div>
 </div>
 
 <script>
     // --- KHỞI TẠO NGÀY & TEMPLATE ---
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    document.getElementById('currentDate').value = today.toLocaleDateString('vi-VN');
-
+    const today = new Date(); today.setHours(0, 0, 0, 0); document.getElementById('currentDate').value = today.toLocaleDateString('vi-VN');
     function updatePrintDoctorName() { document.getElementById('doctorPrintName').innerText = document.getElementById('doctorSelector').value; }
 
     function previewImages(event) {
@@ -223,42 +200,15 @@
         for (let i = 0; i < files.length; i++) {
             const imgBox = document.createElement('div');
             imgBox.className = 'img-box';
-            imgBox.innerHTML = `<img src="${URL.createObjectURL(files[i])}"><button class="btn-remove-img no-print" onclick="this.parentElement.remove()">X</button>`;
+            imgBox.innerHTML = `<img src="${URL.createObjectURL(files[i])}" style="max-height: 250px; border:1px solid #ccc; width:100%; object-fit: cover;"><button class="btn-remove-img no-print" onclick="this.parentElement.remove()">X</button>`;
             document.getElementById('imageGallery').appendChild(imgBox);
         }
     }
 
-    // Kho Template (Rút gọn HTML để mã ngắn gọn)
-    const t_thai5D = `
-        <div class="section-title">III. SINH TRẮC HỌC (BIOMETRY)</div>
-        <div class="row"><div class="col"><label>Ngôi thai:</label><input type="text" value="Đầu"></div><div class="col"><label>Tim thai:</label><input type="text" value="145 l/p"></div></div>
-        <div class="row"><div class="col"><label>BPD:</label><input type="text" class="short-input"> mm</div><div class="col"><label>HC:</label><input type="text" class="short-input"> mm</div></div>
-        <div class="row"><div class="col"><label>AC:</label><input type="text" class="short-input"> mm</div><div class="col"><label>FL:</label><input type="text" class="short-input"> mm</div></div>
-        <div class="row"><div class="col-full"><label>Ước lượng cân nặng (EFW):</label><input type="text" style="font-weight:bold; color:#c0392b; width:30%;"> gram</div></div>
-        <div class="section-title">IV. HÌNH THÁI HỌC</div>
-        <div class="morph-grid">
-            <div><div class="morph-item"><label>- Đầu mặt cổ:</label><input type="text" value="Bình thường"></div><div class="morph-item"><label>- Tim phổi:</label><input type="text" value="Bình thường"></div></div>
-            <div><div class="morph-item"><label>- Ổ bụng:</label><input type="text" value="Bình thường"></div><div class="morph-item"><label>- Tứ chi:</label><input type="text" value="Bình thường"></div></div>
-        </div>
-        <div class="section-title">V. PHẦN PHỤ CỦA THAI</div>
-        <div class="row"><div class="col"><label>Vị trí nhau bám:</label><input type="text" value="Mặt trước"></div><div class="col"><label>Nước ối (AFI):</label><input type="text" value="Bình thường"></div></div>`;
-    
-    const t_thai12W = `
-        <div class="section-title">III. KẾT QUẢ ĐO ĐẠC</div>
-        <div class="row"><div class="col"><label>Chiều dài đầu mông (CRL):</label><input type="text" class="short-input"> mm</div><div class="col"><label>Tim thai:</label><input type="text" value="160 l/p"></div></div>
-        <div class="row" style="background:#fdf2e9; padding:5px;"><div class="col-full"><label style="color:#c0392b;">Khoảng sáng sau gáy (NT):</label><input type="text" class="short-input" style="font-weight:bold;"> mm</div></div>
-        <div class="section-title">IV. HÌNH THÁI SỚM</div>
-        <div class="morph-grid">
-            <div><div class="morph-item"><label>- Vòm sọ, đường giữa:</label><input type="text" value="Quan sát thấy"></div><div class="morph-item"><label>- Xương mũi (NB):</label><input type="text" value="Hiện diện"></div></div>
-            <div><div class="morph-item"><label>- Dạ dày, Bàng quang:</label><input type="text" value="Quan sát thấy"></div><div class="morph-item"><label>- Tứ chi:</label><input type="text" value="Đủ 4 chi"></div></div>
-        </div>`;
-
-    const t_phuKhoa = `
-        <div class="section-title">II. KẾT QUẢ SIÊU ÂM</div>
-        <div class="row"><div class="col-full"><label>Tử cung:</label><input type="text" class="long-input" value="Tư thế ngả trước, kích thước bình thường, âm vang đồng nhất."></div></div>
-        <div class="row"><div class="col-full"><label>Niêm mạc:</label><input type="text" style="width:20%;"> mm.</div></div>
-        <div class="row"><div class="col-full"><label>Buồng trứng 2 bên:</label><input type="text" class="long-input" value="Bình thường, không có nang."></div></div>
-        <div class="row"><div class="col-full"><label>Cùng đồ:</label><input type="text" value="Không có dịch"></div></div>`;
+    // Template Definitions
+    const t_thai5D = `<div class="section-title">III. SINH TRẮC HỌC (BIOMETRY)</div><div class="row"><div class="col"><label>Ngôi thai:</label><input type="text" value="Đầu"></div><div class="col"><label>Tim thai:</label><input type="text" value="145 l/p"></div></div><div class="row"><div class="col"><label>BPD:</label><input type="text" class="short-input"> mm</div><div class="col"><label>HC:</label><input type="text" class="short-input"> mm</div></div><div class="row"><div class="col"><label>AC:</label><input type="text" class="short-input"> mm</div><div class="col"><label>FL:</label><input type="text" class="short-input"> mm</div></div><div class="row"><div class="col-full"><label>Ước lượng cân nặng (EFW):</label><input type="text" style="font-weight:bold; color:#c0392b; width:30%;"> gram</div></div><div class="section-title">IV. HÌNH THÁI HỌC</div><div class="morph-grid"><div><div class="morph-item"><label>- Đầu mặt cổ:</label><input type="text" value="Bình thường"></div><div class="morph-item"><label>- Tim phổi:</label><input type="text" value="Bình thường"></div></div><div><div class="morph-item"><label>- Ổ bụng:</label><input type="text" value="Bình thường"></div><div class="morph-item"><label>- Tứ chi:</label><input type="text" value="Bình thường"></div></div></div><div class="section-title">V. PHẦN PHỤ CỦA THAI</div><div class="row"><div class="col"><label>Vị trí nhau bám:</label><input type="text" value="Mặt trước"></div><div class="col"><label>Nước ối (AFI):</label><input type="text" value="Bình thường"></div></div>`;
+    const t_thai12W = `<div class="section-title">III. KẾT QUẢ ĐO ĐẠC</div><div class="row"><div class="col"><label>Chiều dài đầu mông (CRL):</label><input type="text" class="short-input"> mm</div><div class="col"><label>Tim thai:</label><input type="text" value="160 l/p"></div></div><div class="row" style="background:#fdf2e9; padding:5px;"><div class="col-full"><label style="color:#c0392b;">Khoảng sáng sau gáy (NT):</label><input type="text" class="short-input" style="font-weight:bold;"> mm</div></div><div class="section-title">IV. HÌNH THÁI SỚM</div><div class="morph-grid"><div><div class="morph-item"><label>- Vòm sọ, đường giữa:</label><input type="text" value="Quan sát thấy"></div><div class="morph-item"><label>- Xương mũi (NB):</label><input type="text" value="Hiện diện"></div></div><div><div class="morph-item"><label>- Dạ dày, Bàng quang:</label><input type="text" value="Quan sát thấy"></div><div class="morph-item"><label>- Tứ chi:</label><input type="text" value="Đủ 4 chi"></div></div></div>`;
+    const t_phuKhoa = `<div class="section-title">II. KẾT QUẢ SIÊU ÂM</div><div class="row"><div class="col-full"><label>Tử cung:</label><input type="text" class="long-input" value="Tư thế ngả trước, kích thước bình thường, âm vang đồng nhất."></div></div><div class="row"><div class="col-full"><label>Niêm mạc:</label><input type="text" style="width:20%;"> mm.</div></div><div class="row"><div class="col-full"><label>Buồng trứng 2 bên:</label><input type="text" class="long-input" value="Bình thường, không có nang."></div></div><div class="row"><div class="col-full"><label>Cùng đồ:</label><input type="text" value="Không có dịch"></div></div>`;
 
     const templates = {
         "thai_to_5d": { title: "Siêu âm đơn thai 5D (Hơn 12 tuần)", html: t_thai5D, kl: "Một thai sống trong tử cung phát triển tương đương {GA}." },
@@ -271,7 +221,6 @@
         "tuyen_giap": { title: "Siêu âm Tuyến giáp", html: `<div class="section-title">II. KẾT QUẢ</div><div class="row"><div class="col-full"><label>Tuyến giáp 2 thùy:</label><input type="text" class="long-input" value="Kích thước bình thường, nhu mô đồng nhất, không khối khu trú."></div></div>`, kl: "Siêu âm tuyến giáp bình thường (TIRADS 1)." }
     };
     
-    // Đa thai (nhân đôi form)
     templates["song_thai_to_5d"] = { title: "Siêu âm song thai 5D", html: "<h3>THAI SỐ 1</h3>" + t_thai5D.replace(/III\.|IV\.|V\./g,'') + "<h3>THAI SỐ 2</h3>" + t_thai5D.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
     templates["song_thai_to_2d"] = templates["song_thai_to_5d"];
     templates["song_thai_12w_5d"] = { title: "Siêu âm song thai 5D (12 tuần)", html: "<h3>THAI SỐ 1</h3>" + t_thai12W.replace(/III\.|IV\./g,'') + "<h3>THAI SỐ 2</h3>" + t_thai12W.replace(/III\.|IV\./g,''), kl: "Song thai sống tương đương {GA}. Đề nghị Double Test." };
@@ -279,23 +228,20 @@
 
     const obsTemplates = ["thai_to_5d", "thai_12w_5d", "thai_to_2d", "thai_nho_2d", "song_thai_12w_5d", "song_thai_to_5d", "song_thai_nho_2d", "song_thai_to_2d"];
 
-    function changeTemplate(preventKetLuanReset = false) {
+    function changeTemplate(preventKlReset = false) {
         const selected = document.getElementById('chiDinhSelect').value;
         const tmpl = templates[selected];
         document.getElementById('printChiDinhLabel').innerText = tmpl.title;
         document.getElementById('dynamicFormContainer').innerHTML = tmpl.html;
         
         if (obsTemplates.includes(selected)) {
-            document.getElementById('obstetricsSection').style.display = 'block';
-            document.getElementById('ketLuanTitle').innerText = "VI. KẾT LUẬN & ĐỀ NGHỊ";
+            document.getElementById('obstetricsSection').style.display = 'block'; document.getElementById('ketLuanTitle').innerText = "VI. KẾT LUẬN & ĐỀ NGHỊ";
         } else {
-            document.getElementById('obstetricsSection').style.display = 'none';
-            document.getElementById('ketLuanTitle').innerText = "III. KẾT LUẬN & ĐỀ NGHỊ";
+            document.getElementById('obstetricsSection').style.display = 'none'; document.getElementById('ketLuanTitle').innerText = "III. KẾT LUẬN & ĐỀ NGHỊ";
         }
-        if(!preventKetLuanReset) { updateCalculationUI(); }
+        if(!preventKlReset) updateCalculationUI();
     }
 
-    // Tính tuổi thai
     function updateCalculationUI() {
         if(document.querySelector('input[value="lmp"]').checked) {
             document.getElementById('divLMP').style.display = 'flex'; document.getElementById('divEDD_US').style.display = 'none';
@@ -311,15 +257,12 @@
         if (!dateString) { document.getElementById('ketLuanText').value = templates[document.getElementById('chiDinhSelect').value].kl; return; }
         const d = new Date(dateString); d.setHours(0,0,0,0);
         if(!isNaN(d)) {
-            let edd = new Date(d); 
-            if(!isEDD) edd.setDate(edd.getDate() + addDays);
+            let edd = new Date(d); if(!isEDD) edd.setDate(edd.getDate() + addDays);
             document.getElementById('eddResult').innerText = edd.toLocaleDateString('vi-VN');
-            
             let lmp = isEDD ? new Date(d.setDate(d.getDate() - 280)) : d;
             let days = Math.floor((today - lmp) / 86400000);
             let gaStr = days < 0 ? "Chưa thụ thai" : `${Math.floor(days/7)} tuần ${days%7} ngày`;
             document.getElementById('gaResult').innerText = gaStr;
-            
             if(obsTemplates.includes(document.getElementById('chiDinhSelect').value)) {
                 document.getElementById('ketLuanText').value = templates[document.getElementById('chiDinhSelect').value].kl.replace("{GA}", gaStr);
             }
@@ -327,108 +270,91 @@
     }
     changeTemplate();
 
-    // --- HỆ THỐNG LƯU TRỮ LOCALSTORAGE ---
-    let records = JSON.parse(localStorage.getItem('ultrasound_records')) || [];
+    // --- LOGIC XUẤT FILE WORD ---
+    function exportHTMLToWord() {
+        updatePrintDoctorName();
+        const clone = document.getElementById('printableArea').cloneNode(true);
+        const noPrints = clone.querySelectorAll('.no-print');
+        noPrints.forEach(el => el.remove());
+        const originalInputs = document.getElementById('printableArea').querySelectorAll('input, textarea, select');
+        const clonedInputs = clone.querySelectorAll('input, textarea, select');
+        
+        for (let i = 0; i < originalInputs.length; i++) {
+            const span = document.createElement('span');
+            span.innerText = originalInputs[i].value;
+            span.style.fontWeight = originalInputs[i].style.fontWeight || "normal";
+            clonedInputs[i].parentNode.replaceChild(span, clonedInputs[i]);
+        }
 
+        const html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Ket Qua Sieu Am</title></head><body>" + clone.innerHTML + "</body></html>";
+        const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+        const url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+        const fileName = (document.getElementById('patientName').value || 'KetQua') + '_SieuAm.doc';
+        
+        const downloadLink = document.createElement("a");
+        document.body.appendChild(downloadLink);
+        
+        if (navigator.msSaveOrOpenBlob) { navigator.msSaveOrOpenBlob(blob, fileName); } 
+        else { downloadLink.href = url; downloadLink.download = fileName; downloadLink.click(); }
+        document.body.removeChild(downloadLink);
+    }
+
+    // --- LƯU TRỮ HỒ SƠ & TÌM KIẾM ---
+    let records = JSON.parse(localStorage.getItem('ultrasound_records')) || [];
+    
     function saveRecord() {
         const name = document.getElementById('patientName').value.trim();
         if(!name) { alert("Vui lòng nhập Tên bệnh nhân trước khi lưu!"); return; }
-        
-        // Thu thập toàn bộ dữ liệu nhập vào (cả form động)
         const inputs = Array.from(document.querySelectorAll('#printableArea input:not([type="file"]), #printableArea textarea, #printableArea select'));
         const inputData = inputs.map(el => el.value);
-
-        const newRecord = {
-            id: Date.now(),
-            date: document.getElementById('currentDate').value,
-            name: name,
-            yob: document.getElementById('patientYob').value,
-            typeTitle: templates[document.getElementById('chiDinhSelect').value].title,
-            typeVal: document.getElementById('chiDinhSelect').value,
-            ketLuan: document.getElementById('ketLuanText').value,
-            allInputs: inputData
-        };
-
-        records.push(newRecord);
+        records.push({ id: Date.now(), date: document.getElementById('currentDate').value, name: name, yob: document.getElementById('patientYob').value, typeTitle: templates[document.getElementById('chiDinhSelect').value].title, typeVal: document.getElementById('chiDinhSelect').value, ketLuan: document.getElementById('ketLuanText').value, allInputs: inputData });
         localStorage.setItem('ultrasound_records', JSON.stringify(records));
-        alert("Đã lưu hồ sơ thành công!");
+        alert("Đã lưu hồ sơ thành công!"); 
+        document.getElementById('searchInput').value = ''; 
         renderHistory();
     }
 
     function renderHistory() {
-        const tbody = document.getElementById('historyTableBody');
+        const searchText = document.getElementById('searchInput') ? document.getElementById('searchInput').value.toLowerCase() : '';
+        const tbody = document.getElementById('historyTableBody'); 
         tbody.innerHTML = '';
-        // Hiển thị từ mới nhất đến cũ nhất
-        [...records].reverse().forEach(rec => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${rec.date}</td>
-                <td style="font-weight:bold;">${rec.name}</td>
-                <td>${rec.yob}</td>
-                <td>${rec.typeTitle}</td>
-                <td>${rec.ketLuan}</td>
-                <td>
-                    <button class="btn-action btn-load" onclick="loadRecord(${rec.id})">Mở lại</button>
-                    <button class="btn-action btn-delete" onclick="deleteRecord(${rec.id})">Xóa</button>
-                </td>
-            `;
-            tbody.appendChild(tr);
+        
+        const filteredRecords = records.filter(rec => 
+            rec.name.toLowerCase().includes(searchText) || 
+            rec.date.toLowerCase().includes(searchText)
+        );
+
+        [...filteredRecords].reverse().forEach(rec => {
+            tbody.innerHTML += `<tr><td>${rec.date}</td><td style="font-weight:bold;">${rec.name}</td><td>${rec.yob}</td><td>${rec.typeTitle}</td><td>${rec.ketLuan}</td><td><button class="btn-action btn-load" onclick="loadRecord(${rec.id})">Mở</button><button class="btn-action btn-delete" onclick="deleteRecord(${rec.id})">Xóa</button></td></tr>`;
         });
     }
 
     function loadRecord(id) {
-        if(!confirm("Mở lại hồ sơ này? Các dữ liệu đang nhập dở sẽ bị thay thế.")) return;
+        if(!confirm("Mở lại hồ sơ này? Các dữ liệu đang nhập dở sẽ bị xóa.")) return;
         const rec = records.find(r => r.id === id);
         if(rec) {
-            // Đổi lại template form trước
-            document.getElementById('chiDinhSelect').value = rec.typeVal;
-            changeTemplate(true); // true = không reset lại câu kết luận
-            
-            // Bơm lại toàn bộ dữ liệu vào ô input
+            document.getElementById('chiDinhSelect').value = rec.typeVal; changeTemplate(true);
             const inputs = Array.from(document.querySelectorAll('#printableArea input:not([type="file"]), #printableArea textarea, #printableArea select'));
-            inputs.forEach((el, index) => {
-                if(rec.allInputs[index] !== undefined) {
-                    el.value = rec.allInputs[index];
-                    // Kích hoạt event change để tính lại ngày tháng nếu có
-                    if(el.type === 'date' || el.type === 'radio') {
-                        el.dispatchEvent(new Event('change'));
-                    }
-                }
-            });
+            inputs.forEach((el, index) => { if(rec.allInputs[index] !== undefined) { el.value = rec.allInputs[index]; if(el.type === 'date' || el.type === 'radio') el.dispatchEvent(new Event('change')); } });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
-
-    function deleteRecord(id) {
-        if(confirm("Bạn có chắc chắn muốn xóa hồ sơ này khỏi lịch sử?")) {
-            records = records.filter(r => r.id !== id);
-            localStorage.setItem('ultrasound_records', JSON.stringify(records));
-            renderHistory();
-        }
+    
+    function deleteRecord(id) { 
+        if(confirm("Bạn có chắc chắn muốn xóa hồ sơ này?")) { 
+            records = records.filter(r => r.id !== id); 
+            localStorage.setItem('ultrasound_records', JSON.stringify(records)); 
+            renderHistory(); 
+        } 
     }
-
-    // --- XUẤT EXCEL ---
+    
     function exportToExcel() {
-        if(records.length === 0) { alert("Chưa có hồ sơ nào để xuất!"); return; }
-        let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; // \uFEFF fix lỗi font tiếng Việt trong Excel
-        csvContent += "Ngày khám,Họ tên,Năm sinh,Loại siêu âm,Kết luận\n";
-        
-        records.forEach(rec => {
-            let name = '"' + rec.name.replace(/"/g, '""') + '"';
-            let kl = '"' + rec.ketLuan.replace(/"/g, '""') + '"';
-            csvContent += `${rec.date},${name},${rec.yob},"${rec.typeTitle}",${kl}\n`;
-        });
-
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `DS_SieuAm_${new Date().toLocaleDateString('vi-VN').replace(/\//g,'-')}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        if(records.length === 0) { alert("Chưa có hồ sơ!"); return; }
+        let csv = "data:text/csv;charset=utf-8,\uFEFFNgày khám,Họ tên,Năm sinh,Loại siêu âm,Kết luận\n";
+        records.forEach(rec => csv += `${rec.date},"${rec.name.replace(/"/g, '""')}",${rec.yob},"${rec.typeTitle}","${rec.ketLuan.replace(/"/g, '""')}"\n`);
+        const link = document.createElement("a"); link.href = encodeURI(csv); link.download = `DanhSach_${new Date().toLocaleDateString('vi-VN').replace(/\//g,'-')}.csv`; document.body.appendChild(link); link.click(); document.body.removeChild(link);
     }
-
-    // Chạy render bảng lịch sử khi mới mở trang
+    
     renderHistory();
 </script>
 
