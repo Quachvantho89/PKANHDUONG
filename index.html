@@ -145,11 +145,20 @@
     <!-- Thẻ này chỉ hiện khi IN hoặc Xuất Word -->
     <div id="ghiChuPrint" class="print-only" style="margin-top: 5px; font-weight: normal;">Không</div>
 
-    <!-- KẾT LUẬN -->
+    <!-- KẾT LUẬN & ĐỀ NGHỊ -->
     <div class="section-title" id="ketLuanTitle">KẾT LUẬN & ĐỀ NGHỊ</div>
     <textarea id="ketLuanText" style="font-weight: bold;"></textarea>
     <div class="row" style="margin-top: 10px;">
         <div class="col-full"><label>Đề nghị:</label><input type="text" id="deNghiText" value="Theo dõi định kỳ." class="long-input"></div>
+    </div>
+
+    <!-- KHUYẾN CÁO RIÊNG CHO MẪU 5D -->
+    <div id="khuyenCao5D" class="row" style="display: none; margin-top: 15px;">
+        <div class="col-full">
+            <div style="padding: 8px 12px; border: 1px dashed #7f8c8d; border-radius: 4px; font-size: 0.9em; font-style: italic; color: #2c3e50; text-align: justify;">
+                <strong style="text-decoration: underline;">Khuyến cáo:</strong> Siêu âm hình thái học thai nhi chỉ giúp phát hiện các bất thường về cấu trúc hoặc dị tật lớn có thể quan sát thấy được. Để đánh giá toàn diện nguy cơ mắc các dị tật di truyền và hội chứng bẩm sinh, thai phụ cần thực hiện thêm các xét nghiệm sàng lọc trước sinh.
+            </div>
+        </div>
     </div>
 
     <!-- CHỮ KÝ -->
@@ -300,7 +309,7 @@
 
     const t_thai_nho = `<div class="section-title">III. KẾT QUẢ KHẢO SÁT THAI</div><div class="row"><div class="col"><label>Túi thai (GS):</label><input type="text" class="short-input"> mm</div><div class="col"><label>Phôi thai (CRL):</label><input type="text" class="short-input"> mm</div></div><div class="row"><div class="col"><label>Túi noãn hoàng:</label><input type="text" value="Có, bờ đều"></div><div class="col"><label>Tim thai:</label><input type="text" value="... l/p"></div></div>`;
     
-    // --- CÁC MẪU FORM TỔNG QUÁT MỚI (CHI TIẾT, CHUYÊN NGHIỆP) ---
+    // --- CÁC MẪU FORM TỔNG QUÁT ---
     const t_phuKhoa = `<div class="section-title">II. KẾT QUẢ SIÊU ÂM</div><div class="row"><div class="col-full"><label>Tử cung:</label><input type="text" class="long-input" value="Tư thế ngả trước, kích thước bình thường, âm vang đồng nhất."></div></div><div class="row"><div class="col-full"><label>Niêm mạc:</label><input type="text" style="width:20%;"> mm.</div></div><div class="row"><div class="col-full"><label>Buồng trứng 2 bên:</label><input type="text" class="long-input" value="Bình thường, không có nang."></div></div><div class="row"><div class="col-full"><label>Cùng đồ:</label><input type="text" value="Không có dịch"></div></div>`;
     
     const t_o_bung = `
@@ -339,7 +348,7 @@
     const templates = {
         "thai_to_5d": { title: "Siêu âm đơn thai 5D (Hơn 12 tuần)", html: t_thai5D, kl: "Một thai sống trong tử cung phát triển tương đương {GA}." },
         "thai_to_2d": { title: "Siêu âm đơn thai 2D (Thai to)", html: t_thai2D_to, kl: "Một thai sống trong tử cung phát triển tương đương {GA}." },
-        "thai_12w_5d": { title: "Siêu âm thai 12 tuần (Đo mờ da gáy)", html: t_thai12W, kl: "Một thai sống tương đương {GA}. Đề nghị kết hợp xét nghiệm sàng lọc Double Test." },
+        "thai_12w_5d": { title: "Siêu âm thai 12 tuần (Đo mờ da gáy)", html: t_thai12W, kl: "Một thai sống trong tử cung tương đương {GA}." }, // Đã xóa Double test
         "thai_nho_2d": { title: "Siêu âm thai sớm (Dưới 12 tuần)", html: t_thai_nho, kl: "Một thai sống trong tử cung tương đương {GA}." },
         "phu_khoa": { title: "Siêu âm Tử cung - Phần phụ", html: t_phuKhoa, kl: "Hình ảnh tử cung và hai phần phụ hiện tại chưa thấy bất thường." },
         "o_bung": { title: "Siêu âm Ổ bụng tổng quát", html: t_o_bung, kl: "Hình ảnh siêu âm ổ bụng hiện tại bình thường." },
@@ -350,10 +359,11 @@
     // Song thai
     templates["song_thai_to_5d"] = { title: "Siêu âm song thai 5D", html: "<h3>THAI SỐ 1</h3>" + t_thai5D.replace(/III\.|IV\.|V\./g,'') + "<h3>THAI SỐ 2</h3>" + t_thai5D.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
     templates["song_thai_to_2d"] = { title: "Siêu âm song thai 2D", html: "<h3>THAI SỐ 1</h3>" + t_thai2D_to.replace(/III\.|IV\.|V\./g,'') + "<h3>THAI SỐ 2</h3>" + t_thai2D_to.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
-    templates["song_thai_12w_5d"] = { title: "Siêu âm song thai 5D (12 tuần)", html: "<h3>THAI SỐ 1</h3>" + t_thai12W.replace(/III\.|IV\.|V\./g,'') + "<h3>THAI SỐ 2</h3>" + t_thai12W.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}. Đề nghị Double Test." };
+    templates["song_thai_12w_5d"] = { title: "Siêu âm song thai 5D (12 tuần)", html: "<h3>THAI SỐ 1</h3>" + t_thai12W.replace(/III\.|IV\.|V\./g,'') + "<h3>THAI SỐ 2</h3>" + t_thai12W.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." }; // Đã xóa Double test
     templates["song_thai_nho_2d"] = { title: "Siêu âm song thai sớm", html: "<h3>THAI SỐ 1</h3>" + t_thai_nho.replace(/III\./g,'') + "<h3>THAI SỐ 2</h3>" + t_thai_nho.replace(/III\./g,''), kl: "Song thai sống tương đương {GA}." };
 
     const obsTemplates = ["thai_to_5d", "thai_12w_5d", "thai_to_2d", "thai_nho_2d", "song_thai_12w_5d", "song_thai_to_5d", "song_thai_nho_2d", "song_thai_to_2d"];
+    const templates5D = ["thai_to_5d", "thai_12w_5d", "song_thai_to_5d", "song_thai_12w_5d"];
 
     function changeTemplate(preventKlReset = false) {
         const selected = document.getElementById('chiDinhSelect').value;
@@ -361,12 +371,20 @@
         document.getElementById('printChiDinhLabel').innerText = tmpl.title;
         document.getElementById('dynamicFormContainer').innerHTML = tmpl.html;
         
+        // Quản lý hiển thị phần Sản khoa (Tuổi thai)
         if (obsTemplates.includes(selected)) {
             document.getElementById('obstetricsSection').style.display = 'block'; 
             document.getElementById('ketLuanTitle').innerText = "VI. KẾT LUẬN & ĐỀ NGHỊ";
         } else {
             document.getElementById('obstetricsSection').style.display = 'none'; 
             document.getElementById('ketLuanTitle').innerText = "III. KẾT LUẬN & ĐỀ NGHỊ";
+        }
+
+        // Quản lý hiển thị Khuyến cáo riêng cho mẫu 5D
+        if (templates5D.includes(selected)) {
+            document.getElementById('khuyenCao5D').style.display = 'flex';
+        } else {
+            document.getElementById('khuyenCao5D').style.display = 'none';
         }
         
         if(!preventKlReset) {
@@ -404,30 +422,26 @@
     }
     changeTemplate();
 
-    // --- LOGIC XUẤT FILE WORD TỐI ƯU HÓA CHO PRINT-ONLY ---
+    // --- LOGIC XUẤT FILE WORD TỐI ƯU HÓA ---
     function exportHTMLToWord() {
         updatePrintDoctorName();
-        updateGhiChuPrint(); // Đảm bảo Ghi chú được cập nhật
+        updateGhiChuPrint();
         
         const clone = document.getElementById('printableArea').cloneNode(true);
         
-        // Xóa hoàn toàn các thành phần no-print
         const noPrints = clone.querySelectorAll('.no-print');
         noPrints.forEach(el => el.remove());
         
-        // Buộc hiện các thành phần print-only trên Word
         const printOnlys = clone.querySelectorAll('.print-only');
         printOnlys.forEach(el => {
             el.classList.remove('print-only');
             el.style.display = 'block'; 
         });
 
-        // Đổi các ô nhập liệu thành chữ thường để Word đọc được
         const originalInputs = document.getElementById('printableArea').querySelectorAll('input, textarea, select');
         const clonedInputs = clone.querySelectorAll('input, textarea, select');
         
         for (let i = 0; i < originalInputs.length; i++) {
-            // Loại trừ những thẻ đã bị xóa bởi no-print (như dropdown chọn bệnh nhân, hoặc ô ghi chú ẩn)
             if(clonedInputs[i] && clonedInputs[i].parentNode) {
                 const span = document.createElement('span');
                 span.innerText = originalInputs[i].value;
@@ -491,7 +505,7 @@
                     if(el.type === 'date' || el.type === 'radio') el.dispatchEvent(new Event('change')); 
                 } 
             });
-            updateGhiChuPrint(); // Đảm bảo ghi chú cập nhật lại đúng khi mở hồ sơ cũ
+            updateGhiChuPrint();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
