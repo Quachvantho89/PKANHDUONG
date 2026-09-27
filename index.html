@@ -102,9 +102,9 @@
                 </optgroup>
                 <optgroup label="Khảo sát tổng quát & Phụ khoa">
                     <option value="phu_khoa">Siêu âm Tử cung - Phần phụ</option>
+                    <option value="o_bung">Siêu âm Ổ bụng tổng quát</option>
                     <option value="tuyen_vu">Siêu âm Tuyến vú</option>
                     <option value="tuyen_giap">Siêu âm Tuyến giáp</option>
-                    <option value="o_bung">Siêu âm Ổ bụng tổng quát</option>
                 </optgroup>
             </select>
         </div>
@@ -141,7 +141,9 @@
 
     <!-- PHẦN GHI CHÚ / KẾT QUẢ KHÁC DÙNG CHUNG -->
     <div class="section-title" style="margin-top: 15px;">KẾT QUẢ / GHI CHÚ KHÁC</div>
-    <textarea id="ghiChuText" style="height: 45px; font-weight: normal; margin-top: 0;" placeholder="Ghi chú thêm các bất thường (Ví dụ: nang thừng tinh, u xơ tử cung, mẹ có nang buồng trứng...)"></textarea>
+    <textarea id="ghiChuText" class="no-print" style="height: 45px; font-weight: normal; margin-top: 0;" placeholder="Ghi chú thêm các bất thường (Ví dụ: nang thừng tinh, u xơ tử cung...)" oninput="updateGhiChuPrint()"></textarea>
+    <!-- Thẻ này chỉ hiện khi IN hoặc Xuất Word -->
+    <div id="ghiChuPrint" class="print-only" style="margin-top: 5px; font-weight: normal;">Không</div>
 
     <!-- KẾT LUẬN -->
     <div class="section-title" id="ketLuanTitle">KẾT LUẬN & ĐỀ NGHỊ</div>
@@ -202,6 +204,11 @@
     const today = new Date(); today.setHours(0, 0, 0, 0); document.getElementById('currentDate').value = today.toLocaleDateString('vi-VN');
     function updatePrintDoctorName() { document.getElementById('doctorPrintName').innerText = document.getElementById('doctorSelector').value; }
 
+    function updateGhiChuPrint() {
+        const val = document.getElementById('ghiChuText').value.trim();
+        document.getElementById('ghiChuPrint').innerText = val === '' ? 'Không' : val;
+    }
+
     function previewImages(event) {
         const files = event.target.files;
         for (let i = 0; i < files.length; i++) {
@@ -212,7 +219,7 @@
         }
     }
 
-    // --- MẪU FORM SIÊU ÂM THAI LỚN 5D CHI TIẾT ---
+    // --- CÁC MẪU FORM SIÊU ÂM THAI ---
     const t_thai5D = `
         <div class="section-title">III. SINH TRẮC HỌC (BIOMETRY)</div>
         <div class="row"><div class="col"><label>Ngôi thai:</label><input type="text" value="Đầu"></div><div class="col"><label>Tim thai:</label><input type="text" value="145 l/p"></div></div>
@@ -228,7 +235,6 @@
                 <div class="morph-item"><label>- Não thất bên, hố sau:</label><input type="text" value="Bình thường"></div>
                 <div class="morph-item"><label>- Môi trên, xương mũi:</label><input type="text" value="Bình thường"></div>
                 <div class="morph-item"><label>- Hai hố mắt, khẩu cái mềm:</label><input type="text" value="Quan sát thấy"></div>
-                
                 <strong style="display:block; margin-top:8px; color: #2980b9; font-size: 0.95em;">2. Lồng ngực - Tim thai</strong>
                 <div class="morph-item"><label>- Lồng ngực, hai phổi:</label><input type="text" value="Bình thường"></div>
                 <div class="morph-item"><label>- Mặt cắt 4 buồng tim:</label><input type="text" value="Bình thường"></div>
@@ -240,7 +246,6 @@
                 <div class="morph-item"><label>- Thành bụng, cuống rốn:</label><input type="text" value="Đóng kín"></div>
                 <div class="morph-item"><label>- Dạ dày, bóng mật:</label><input type="text" value="Quan sát thấy"></div>
                 <div class="morph-item"><label>- Hai thận, bàng quang:</label><input type="text" value="Bình thường"></div>
-                
                 <strong style="display:block; margin-top:8px; color: #2980b9; font-size: 0.95em;">4. Cột sống - Tứ chi</strong>
                 <div class="morph-item"><label>- Cột sống (cổ, ngực, TL):</label><input type="text" value="Liên tục"></div>
                 <div class="morph-item"><label>- Xương dài tứ chi:</label><input type="text" value="Bình thường"></div>
@@ -253,14 +258,12 @@
         <div class="row"><div class="col-full"><label>Chỉ số nước ối (AFI):</label><input type="text" value="Bình thường" style="width: 80%;"></div></div>
     `;
 
-    // --- MẪU FORM SIÊU ÂM THAI LỚN 2D CƠ BẢN ---
     const t_thai2D_to = `
         <div class="section-title">III. SINH TRẮC HỌC (BIOMETRY)</div>
         <div class="row"><div class="col"><label>Ngôi thai:</label><input type="text" value="Đầu"></div><div class="col"><label>Tim thai:</label><input type="text" value="145 l/p"></div></div>
         <div class="row"><div class="col"><label>BPD (ĐK lưỡng đỉnh):</label><input type="text" class="short-input"> mm</div><div class="col"><label>HC (Chu vi vòng đầu):</label><input type="text" class="short-input"> mm</div></div>
         <div class="row"><div class="col"><label>AC (Chu vi vòng bụng):</label><input type="text" class="short-input"> mm</div><div class="col"><label>FL (Chiều dài X.đùi):</label><input type="text" class="short-input"> mm</div></div>
         <div class="row"><div class="col-full"><label>Ước lượng cân nặng (EFW):</label><input type="text" style="font-weight:bold; color:#c0392b; width:30%;"> gram</div></div>
-        
         <div class="section-title">IV. KHẢO SÁT HÌNH THÁI CƠ BẢN</div>
         <div class="morph-grid">
             <div>
@@ -274,30 +277,20 @@
                 <div class="morph-item"><label>- Cột sống, tứ chi:</label><input type="text" value="Bình thường"></div>
             </div>
         </div>
-        
         <div class="section-title">V. PHẦN PHỤ CỦA THAI</div>
         <div class="row"><div class="col"><label>Vị trí nhau bám:</label><input type="text" value="Mặt trước"></div><div class="col"><label>Độ trưởng thành:</label><input type="text" value="Độ 1"></div></div>
         <div class="row"><div class="col-full"><label>Chỉ số nước ối (AFI):</label><input type="text" value="Bình thường" style="width: 80%;"></div></div>
     `;
 
-    // --- MẪU 12W 5D (CÓ THÊM DOPPLER ĐM TỬ CUNG) ---
     const t_thai12W = `
         <div class="section-title">III. KẾT QUẢ ĐO ĐẠC</div>
         <div class="row"><div class="col"><label>Chiều dài đầu mông (CRL):</label><input type="text" class="short-input"> mm</div><div class="col"><label>Tim thai:</label><input type="text" value="160 l/p"></div></div>
         <div class="row" style="background:#fdf2e9; padding:5px;"><div class="col-full"><label style="color:#c0392b;">Khoảng sáng sau gáy (NT):</label><input type="text" class="short-input" style="font-weight:bold;"> mm</div></div>
-        
         <div class="section-title">IV. HÌNH THÁI SỚM</div>
         <div class="morph-grid">
-            <div>
-                <div class="morph-item"><label>- Vòm sọ, đường giữa:</label><input type="text" value="Quan sát thấy"></div>
-                <div class="morph-item"><label>- Xương mũi (NB):</label><input type="text" value="Hiện diện"></div>
-            </div>
-            <div>
-                <div class="morph-item"><label>- Dạ dày, Bàng quang:</label><input type="text" value="Quan sát thấy"></div>
-                <div class="morph-item"><label>- Tứ chi:</label><input type="text" value="Đủ 4 chi"></div>
-            </div>
+            <div><div class="morph-item"><label>- Vòm sọ, đường giữa:</label><input type="text" value="Quan sát thấy"></div><div class="morph-item"><label>- Xương mũi (NB):</label><input type="text" value="Hiện diện"></div></div>
+            <div><div class="morph-item"><label>- Dạ dày, Bàng quang:</label><input type="text" value="Quan sát thấy"></div><div class="morph-item"><label>- Tứ chi:</label><input type="text" value="Đủ 4 chi"></div></div>
         </div>
-
         <div class="section-title">V. DOPPLER ĐỘNG MẠCH TỬ CUNG (MẸ)</div>
         <div class="row">
             <div class="col"><label>PI ĐM tử cung Phải:</label><input type="text" value="Bình thường"></div>
@@ -306,7 +299,42 @@
     `;
 
     const t_thai_nho = `<div class="section-title">III. KẾT QUẢ KHẢO SÁT THAI</div><div class="row"><div class="col"><label>Túi thai (GS):</label><input type="text" class="short-input"> mm</div><div class="col"><label>Phôi thai (CRL):</label><input type="text" class="short-input"> mm</div></div><div class="row"><div class="col"><label>Túi noãn hoàng:</label><input type="text" value="Có, bờ đều"></div><div class="col"><label>Tim thai:</label><input type="text" value="... l/p"></div></div>`;
+    
+    // --- CÁC MẪU FORM TỔNG QUÁT MỚI (CHI TIẾT, CHUYÊN NGHIỆP) ---
     const t_phuKhoa = `<div class="section-title">II. KẾT QUẢ SIÊU ÂM</div><div class="row"><div class="col-full"><label>Tử cung:</label><input type="text" class="long-input" value="Tư thế ngả trước, kích thước bình thường, âm vang đồng nhất."></div></div><div class="row"><div class="col-full"><label>Niêm mạc:</label><input type="text" style="width:20%;"> mm.</div></div><div class="row"><div class="col-full"><label>Buồng trứng 2 bên:</label><input type="text" class="long-input" value="Bình thường, không có nang."></div></div><div class="row"><div class="col-full"><label>Cùng đồ:</label><input type="text" value="Không có dịch"></div></div>`;
+    
+    const t_o_bung = `
+        <div class="section-title">II. KẾT QUẢ SIÊU ÂM</div>
+        <div class="row"><div class="col-full"><strong>1. Gan:</strong><input type="text" class="long-input" value="Kích thước bình thường, nhu mô đều, không khối khu trú. Tĩnh mạch cửa không giãn."></div></div>
+        <div class="row"><div class="col-full"><strong>2. Hệ mật:</strong></div></div>
+        <div class="row"><div class="col-full" style="padding-left: 20px;"><label>- Túi mật:</label><input type="text" style="width: 70%;" value="Thành không dày, không có sỏi."></div></div>
+        <div class="row"><div class="col-full" style="padding-left: 20px;"><label>- Đường mật:</label><input type="text" style="width: 70%;" value="Đường mật trong và ngoài gan không giãn."></div></div>
+        <div class="row"><div class="col-full"><strong>3. Tụy:</strong><input type="text" class="long-input" value="Kích thước bình thường, nhu mô đều, không có khối khu trú."></div></div>
+        <div class="row"><div class="col-full"><strong>4. Lách:</strong><input type="text" class="long-input" value="Kích thước bình thường, nhu mô đều, không thấy tổn thương."></div></div>
+        <div class="row"><div class="col-full"><strong>5. Hai thận:</strong></div></div>
+        <div class="row"><div class="col-full" style="padding-left: 20px;"><label>- Thận phải:</label><input type="text" style="width: 70%;" value="Kích thước, nhu mô bình thường. Không ứ nước, không sỏi."></div></div>
+        <div class="row"><div class="col-full" style="padding-left: 20px;"><label>- Thận trái:</label><input type="text" style="width: 70%;" value="Kích thước, nhu mô bình thường. Không ứ nước, không sỏi."></div></div>
+        <div class="row"><div class="col-full"><strong>6. Bàng quang:</strong><input type="text" class="long-input" value="Thành mỏng đều, nước tiểu trong, không có sỏi."></div></div>
+        <div class="row"><div class="col-full"><strong>7. Các cơ quan khác:</strong><input type="text" class="long-input" value="Tử cung, phần phụ (hoặc tiền liệt tuyến) bình thường. Ổ bụng không có dịch tự do."></div></div>
+    `;
+
+    const t_tuyen_vu = `
+        <div class="section-title">II. KẾT QUẢ SIÊU ÂM</div>
+        <div class="row"><div class="col-full"><strong>1. Mô tuyến vú hai bên:</strong><input type="text" class="long-input" value="Bề dày lớp mỡ trước và sau tuyến bình thường. Âm vang mô tuyến đồng nhất. Hệ thống ống tuyến không giãn."></div></div>
+        <div class="row"><div class="col-full"><strong>2. Tuyến vú Phải:</strong><input type="text" class="long-input" value="Không thấy tổn thương khu trú."></div></div>
+        <div class="row"><div class="col-full"><strong>3. Tuyến vú Trái:</strong><input type="text" class="long-input" value="Không thấy tổn thương khu trú."></div></div>
+        <div class="row"><div class="col-full"><strong>4. Hố nách hai bên:</strong><input type="text" class="long-input" value="Không thấy hạch phì đại bệnh lý."></div></div>
+    `;
+
+    const t_tuyen_giap = `
+        <div class="section-title">II. KẾT QUẢ SIÊU ÂM</div>
+        <div class="row"><div class="col-full"><strong>1. Thùy Phải:</strong></div></div>
+        <div class="row"><div class="col-full" style="padding-left: 20px;"><label>- Kích thước:</label><input type="text" style="width: 25%;" placeholder="... mm">. Nhu mô: <input type="text" style="width: 50%;" value="Đồng nhất, không có tổn thương khu trú."></div></div>
+        <div class="row"><div class="col-full"><strong>2. Thùy Trái:</strong></div></div>
+        <div class="row"><div class="col-full" style="padding-left: 20px;"><label>- Kích thước:</label><input type="text" style="width: 25%;" placeholder="... mm">. Nhu mô: <input type="text" style="width: 50%;" value="Đồng nhất, không có tổn thương khu trú."></div></div>
+        <div class="row"><div class="col-full"><strong>3. Eo tuyến giáp:</strong><input type="text" class="long-input" value="Kích thước bình thường, nhu mô đều."></div></div>
+        <div class="row"><div class="col-full"><strong>4. Hạch vùng cổ hai bên:</strong><input type="text" class="long-input" value="Không thấy hạch phì đại bệnh lý."></div></div>
+    `;
 
     const templates = {
         "thai_to_5d": { title: "Siêu âm đơn thai 5D (Hơn 12 tuần)", html: t_thai5D, kl: "Một thai sống trong tử cung phát triển tương đương {GA}." },
@@ -314,12 +342,12 @@
         "thai_12w_5d": { title: "Siêu âm thai 12 tuần (Đo mờ da gáy)", html: t_thai12W, kl: "Một thai sống tương đương {GA}. Đề nghị kết hợp xét nghiệm sàng lọc Double Test." },
         "thai_nho_2d": { title: "Siêu âm thai sớm (Dưới 12 tuần)", html: t_thai_nho, kl: "Một thai sống trong tử cung tương đương {GA}." },
         "phu_khoa": { title: "Siêu âm Tử cung - Phần phụ", html: t_phuKhoa, kl: "Hình ảnh tử cung và hai phần phụ hiện tại chưa thấy bất thường." },
-        "o_bung": { title: "Siêu âm Ổ bụng tổng quát", html: `<div class="section-title">II. KẾT QUẢ</div><div class="row"><div class="col-full"><label>Gan, Mật, Tụy, Lách, 2 Thận:</label><input type="text" class="long-input" value="Kích thước và nhu mô bình thường, không khối khu trú, không sỏi."></div></div>`, kl: "Hình ảnh siêu âm ổ bụng hiện tại bình thường." },
-        "tuyen_vu": { title: "Siêu âm Tuyến vú", html: `<div class="section-title">II. KẾT QUẢ</div><div class="row"><div class="col-full"><label>Tuyến vú 2 bên:</label><input type="text" class="long-input" value="Âm vang đồng nhất, ống tuyến không giãn, không thấy khối khu trú."></div></div>`, kl: "Siêu âm tuyến vú hai bên bình thường (BIRADS 1)." },
-        "tuyen_giap": { title: "Siêu âm Tuyến giáp", html: `<div class="section-title">II. KẾT QUẢ</div><div class="row"><div class="col-full"><label>Tuyến giáp 2 thùy:</label><input type="text" class="long-input" value="Kích thước bình thường, nhu mô đồng nhất, không khối khu trú."></div></div>`, kl: "Siêu âm tuyến giáp bình thường (TIRADS 1)." }
+        "o_bung": { title: "Siêu âm Ổ bụng tổng quát", html: t_o_bung, kl: "Hình ảnh siêu âm ổ bụng hiện tại bình thường." },
+        "tuyen_vu": { title: "Siêu âm Tuyến vú", html: t_tuyen_vu, kl: "Siêu âm tuyến vú hai bên bình thường (BIRADS 1)." },
+        "tuyen_giap": { title: "Siêu âm Tuyến giáp", html: t_tuyen_giap, kl: "Siêu âm tuyến giáp bình thường (TIRADS 1)." }
     };
     
-    // Tạo mẫu song thai (Cắt số La Mã để tránh trùng lặp khi nhân đôi)
+    // Song thai
     templates["song_thai_to_5d"] = { title: "Siêu âm song thai 5D", html: "<h3>THAI SỐ 1</h3>" + t_thai5D.replace(/III\.|IV\.|V\./g,'') + "<h3>THAI SỐ 2</h3>" + t_thai5D.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
     templates["song_thai_to_2d"] = { title: "Siêu âm song thai 2D", html: "<h3>THAI SỐ 1</h3>" + t_thai2D_to.replace(/III\.|IV\.|V\./g,'') + "<h3>THAI SỐ 2</h3>" + t_thai2D_to.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
     templates["song_thai_12w_5d"] = { title: "Siêu âm song thai 5D (12 tuần)", html: "<h3>THAI SỐ 1</h3>" + t_thai12W.replace(/III\.|IV\.|V\./g,'') + "<h3>THAI SỐ 2</h3>" + t_thai12W.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}. Đề nghị Double Test." };
@@ -340,7 +368,12 @@
             document.getElementById('obstetricsSection').style.display = 'none'; 
             document.getElementById('ketLuanTitle').innerText = "III. KẾT LUẬN & ĐỀ NGHỊ";
         }
-        if(!preventKlReset) updateCalculationUI();
+        
+        if(!preventKlReset) {
+            updateCalculationUI();
+            document.getElementById('ghiChuText').value = '';
+        }
+        updateGhiChuPrint();
     }
 
     function updateCalculationUI() {
@@ -371,20 +404,36 @@
     }
     changeTemplate();
 
-    // --- LOGIC XUẤT FILE WORD ---
+    // --- LOGIC XUẤT FILE WORD TỐI ƯU HÓA CHO PRINT-ONLY ---
     function exportHTMLToWord() {
         updatePrintDoctorName();
+        updateGhiChuPrint(); // Đảm bảo Ghi chú được cập nhật
+        
         const clone = document.getElementById('printableArea').cloneNode(true);
+        
+        // Xóa hoàn toàn các thành phần no-print
         const noPrints = clone.querySelectorAll('.no-print');
         noPrints.forEach(el => el.remove());
+        
+        // Buộc hiện các thành phần print-only trên Word
+        const printOnlys = clone.querySelectorAll('.print-only');
+        printOnlys.forEach(el => {
+            el.classList.remove('print-only');
+            el.style.display = 'block'; 
+        });
+
+        // Đổi các ô nhập liệu thành chữ thường để Word đọc được
         const originalInputs = document.getElementById('printableArea').querySelectorAll('input, textarea, select');
         const clonedInputs = clone.querySelectorAll('input, textarea, select');
         
         for (let i = 0; i < originalInputs.length; i++) {
-            const span = document.createElement('span');
-            span.innerText = originalInputs[i].value;
-            span.style.fontWeight = originalInputs[i].style.fontWeight || "normal";
-            clonedInputs[i].parentNode.replaceChild(span, clonedInputs[i]);
+            // Loại trừ những thẻ đã bị xóa bởi no-print (như dropdown chọn bệnh nhân, hoặc ô ghi chú ẩn)
+            if(clonedInputs[i] && clonedInputs[i].parentNode) {
+                const span = document.createElement('span');
+                span.innerText = originalInputs[i].value;
+                span.style.fontWeight = originalInputs[i].style.fontWeight || "normal";
+                clonedInputs[i].parentNode.replaceChild(span, clonedInputs[i]);
+            }
         }
 
         const html = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Ket Qua Sieu Am</title></head><body>" + clone.innerHTML + "</body></html>";
@@ -436,7 +485,13 @@
         if(rec) {
             document.getElementById('chiDinhSelect').value = rec.typeVal; changeTemplate(true);
             const inputs = Array.from(document.querySelectorAll('#printableArea input:not([type="file"]), #printableArea textarea, #printableArea select'));
-            inputs.forEach((el, index) => { if(rec.allInputs[index] !== undefined) { el.value = rec.allInputs[index]; if(el.type === 'date' || el.type === 'radio') el.dispatchEvent(new Event('change')); } });
+            inputs.forEach((el, index) => { 
+                if(rec.allInputs[index] !== undefined) { 
+                    el.value = rec.allInputs[index]; 
+                    if(el.type === 'date' || el.type === 'radio') el.dispatchEvent(new Event('change')); 
+                } 
+            });
+            updateGhiChuPrint(); // Đảm bảo ghi chú cập nhật lại đúng khi mở hồ sơ cũ
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
