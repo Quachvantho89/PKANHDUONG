@@ -68,28 +68,41 @@
         .btn-action { padding: 4px 8px; margin-right: 5px; cursor: pointer; border: none; border-radius: 3px; color: white; font-size: 12px;}
         .btn-load { background: #f39c12; } .btn-delete { background: #e74c3c; }
 
-        /* TỐI ƯU HÓA KHI IN RA GIẤY A4 */
+        /* TỐI ƯU HÓA ÉP KHUNG 1 TRANG GIẤY A4 KHI IN */
         @media print {
-            @page { size: A4; margin: 10mm 15mm; } 
-            body { background: white; padding: 0; font-size: 13pt; line-height: 1.25; }
+            @page { size: A4; margin: 8mm 12mm; } /* Tận dụng tối đa lề giấy, mép giấy nhỏ nhất */
+            body { background: white; padding: 0; font-size: 11.5pt; line-height: 1.15; } /* Giảm cỡ chữ tổng thể */
             .container { box-shadow: none; padding: 0; border-radius: 0; max-width: 100%; }
-            input[type="text"], input[type="date"], input[type="number"], textarea, select { border: none; background: transparent; padding: 0; -webkit-appearance: none; }
+            input[type="text"], input[type="date"], input[type="number"], textarea, select { border: none; background: transparent; padding: 0; -webkit-appearance: none; font-size: 11.5pt;}
             .no-print, .action-buttons, .history-container, .image-tools, .btn-remove-img { display: none !important; }
-            .print-only { display: block; font-weight: bold; font-size: 1.1em; color: black; }
-            .header-wrapper { margin-bottom: 5px; padding-bottom: 5px; }
-            h2.title { margin: 5px 0 10px 0; font-size: 1.4em; }
-            .section-title { background: transparent; border-left: none; text-decoration: underline; padding-left: 0; margin-top: 8px; margin-bottom: 4px; font-size: 1.05em;}
+            .print-only { display: block; font-weight: bold; font-size: 1.05em; color: black; }
             
-            table.report-table td, table.report-table th { border: 1px solid #000; padding: 4px 6px; }
+            /* Ép mỏng Header */
+            .header-wrapper { margin-bottom: 3px; padding-bottom: 3px; border-bottom: 1px solid #2c3e50; }
+            h2.title { margin: 3px 0 5px 0; font-size: 1.3em; }
+            .clinic-name { margin-bottom: 2px; font-size: 1.1em; }
+            
+            /* Ép mỏng Bảng và Form */
+            .section-title { background: transparent; border-left: none; text-decoration: underline; padding-left: 0; margin-top: 5px; margin-bottom: 2px; font-size: 1em;}
+            .row { margin-bottom: 2px; }
+            table.report-table { margin-bottom: 3px; font-size: 11pt; } /* Cỡ chữ trong bảng nhỏ gọn */
+            table.report-table td, table.report-table th { border: 1px solid #000; padding: 3px 5px; } /* Xóa padding thừa */
             table.report-table th { background: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            table.report-table input[type="text"] { border-bottom: none; }
+            table.report-table input[type="text"] { border-bottom: none; font-size: 11pt; }
             table.report-table td:nth-child(odd) { background: transparent; }
 
-            .image-gallery { gap: 5px; margin-bottom: 5px; } 
-            .img-box img { max-height: 180px !important; border: none; } 
+            /* Tối ưu hóa Ảnh không bị tràn */
+            .image-gallery { gap: 5px; margin-bottom: 4px; } 
+            .img-box img { max-height: 155px !important; border: none; } /* Khống chế chiều cao ảnh tuyệt đối */
+            
             .auto-calc { color: black; }
-            textarea { height: auto !important; min-height: 20px; overflow: visible; }
-            .signature-box > div { height: 50px !important; } 
+            textarea { height: auto !important; min-height: 18px; overflow: visible; font-size: 11.5pt;}
+            
+            /* Ép mỏng chữ ký */
+            .signature-area { margin-top: 5px; }
+            .signature-box > div { height: 45px !important; } /* Khống chế khoảng trống ký tên */
+            
+            #khuyenCao5D > div > div { padding: 4px 8px !important; font-size: 0.85em !important; margin-bottom: 0;}
         }
     </style>
 </head>
@@ -141,7 +154,7 @@
                 </optgroup>
             </select>
         </div>
-        <div class="col print-only"><label>Chỉ định:</label><span id="printChiDinhLabel">Siêu âm đơn thai 5D (Hơn 12 tuần)</span></div>
+        <div class="col print-only"><label>Chỉ định:</label><span id="printChiDinhLabel">Siêu âm đơn thai 5D</span></div>
     </div>
 
     <div class="image-tools no-print">
@@ -173,19 +186,19 @@
     <div id="dynamicFormContainer"></div>
 
     <!-- PHẦN GHI CHÚ / KẾT QUẢ KHÁC DÙNG CHUNG -->
-    <div class="section-title" style="margin-top: 10px;">KẾT QUẢ / GHI CHÚ KHÁC</div>
+    <div class="section-title" style="margin-top: 5px;">KẾT QUẢ / GHI CHÚ KHÁC</div>
     <textarea id="ghiChuText" class="no-print" style="height: 45px; font-weight: normal; margin-top: 0;" placeholder="Ghi chú thêm các bất thường (Ví dụ: nang thừng tinh, u xơ tử cung...)" oninput="updateGhiChuPrint()"></textarea>
-    <div id="ghiChuPrint" class="print-only" style="margin-top: 5px; font-weight: normal;">Không</div>
+    <div id="ghiChuPrint" class="print-only" style="margin-top: 2px; font-weight: normal;">Không</div>
 
     <!-- KẾT LUẬN & ĐỀ NGHỊ -->
     <div class="section-title" id="ketLuanTitle">KẾT LUẬN & ĐỀ NGHỊ</div>
     <textarea id="ketLuanText" style="font-weight: bold;"></textarea>
-    <div class="row" style="margin-top: 5px;">
+    <div class="row" style="margin-top: 2px;">
         <div class="col-full"><label>Đề nghị:</label><input type="text" id="deNghiText" value="Theo dõi định kỳ." class="long-input"></div>
     </div>
 
     <!-- KHUYẾN CÁO RIÊNG CHO MẪU 5D -->
-    <div id="khuyenCao5D" class="row" style="display: none; margin-top: 10px;">
+    <div id="khuyenCao5D" class="row" style="display: none; margin-top: 5px;">
         <div class="col-full">
             <div style="padding: 6px 10px; border: 1px dashed #7f8c8d; border-radius: 4px; font-size: 0.9em; font-style: italic; color: #2c3e50; text-align: justify;">
                 <strong style="text-decoration: underline;">Khuyến cáo:</strong> Siêu âm hình thái học thai nhi chỉ giúp phát hiện các bất thường về cấu trúc hoặc dị tật lớn có thể quan sát thấy được. Để đánh giá toàn diện nguy cơ mắc các dị tật di truyền và hội chứng bẩm sinh, thai phụ cần thực hiện thêm các xét nghiệm sàng lọc trước sinh.
@@ -197,7 +210,7 @@
     <div class="signature-area">
         <div class="signature-box"></div>
         <div class="signature-box">
-            <p style="font-weight: bold; margin-bottom: 5px;">BÁC SĨ SIÊU ÂM</p>
+            <p style="font-weight: bold; margin-bottom: 2px;">BÁC SĨ SIÊU ÂM</p>
             <div style="height: 70px;"></div>
             <select id="doctorSelector" class="doctor-select no-print" onchange="updatePrintDoctorName()" style="font-weight:bold; font-size: 15px; padding: 5px;">
                 <option value="BS CKI. Quách Văn Thọ">BS CKI. Quách Văn Thọ</option>
@@ -501,10 +514,10 @@
     };
     
     // Song thai
-    templates["song_thai_to_5d"] = { title: "Siêu âm song thai 5D", html: "<h3 style='margin-bottom:5px; color:#e67e22;'>THAI SỐ 1</h3>" + t_thai5D.replace(/III\.|IV\.|V\./g,'') + "<h3 style='margin-bottom:5px; margin-top:15px; color:#e67e22;'>THAI SỐ 2</h3>" + t_thai5D.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
-    templates["song_thai_to_2d"] = { title: "Siêu âm song thai 2D", html: "<h3 style='margin-bottom:5px; color:#e67e22;'>THAI SỐ 1</h3>" + t_thai2D_to.replace(/III\.|IV\.|V\./g,'') + "<h3 style='margin-bottom:5px; margin-top:15px; color:#e67e22;'>THAI SỐ 2</h3>" + t_thai2D_to.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
-    templates["song_thai_12w_5d"] = { title: "Siêu âm song thai 5D (12 tuần)", html: "<h3 style='margin-bottom:5px; color:#e67e22;'>THAI SỐ 1</h3>" + t_thai12W.replace(/III\.|IV\.|V\./g,'') + "<h3 style='margin-bottom:5px; margin-top:15px; color:#e67e22;'>THAI SỐ 2</h3>" + t_thai12W.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
-    templates["song_thai_nho_2d"] = { title: "Siêu âm song thai sớm", html: "<h3 style='margin-bottom:5px; color:#e67e22;'>THAI SỐ 1</h3>" + t_thai_nho.replace(/III\./g,'') + "<h3 style='margin-bottom:5px; margin-top:15px; color:#e67e22;'>THAI SỐ 2</h3>" + t_thai_nho.replace(/III\./g,''), kl: "Song thai sống tương đương {GA}." };
+    templates["song_thai_to_5d"] = { title: "Siêu âm song thai 5D", html: "<h3 style='margin-bottom:5px; margin-top:5px; color:#e67e22;'>THAI SỐ 1</h3>" + t_thai5D.replace(/III\.|IV\.|V\./g,'') + "<h3 style='margin-bottom:5px; margin-top:10px; color:#e67e22;'>THAI SỐ 2</h3>" + t_thai5D.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
+    templates["song_thai_to_2d"] = { title: "Siêu âm song thai 2D", html: "<h3 style='margin-bottom:5px; margin-top:5px; color:#e67e22;'>THAI SỐ 1</h3>" + t_thai2D_to.replace(/III\.|IV\.|V\./g,'') + "<h3 style='margin-bottom:5px; margin-top:10px; color:#e67e22;'>THAI SỐ 2</h3>" + t_thai2D_to.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
+    templates["song_thai_12w_5d"] = { title: "Siêu âm song thai 5D (12 tuần)", html: "<h3 style='margin-bottom:5px; margin-top:5px; color:#e67e22;'>THAI SỐ 1</h3>" + t_thai12W.replace(/III\.|IV\.|V\./g,'') + "<h3 style='margin-bottom:5px; margin-top:10px; color:#e67e22;'>THAI SỐ 2</h3>" + t_thai12W.replace(/III\.|IV\.|V\./g,''), kl: "Song thai sống tương đương {GA}." };
+    templates["song_thai_nho_2d"] = { title: "Siêu âm song thai sớm", html: "<h3 style='margin-bottom:5px; margin-top:5px; color:#e67e22;'>THAI SỐ 1</h3>" + t_thai_nho.replace(/III\./g,'') + "<h3 style='margin-bottom:5px; margin-top:10px; color:#e67e22;'>THAI SỐ 2</h3>" + t_thai_nho.replace(/III\./g,''), kl: "Song thai sống tương đương {GA}." };
 
     const obsTemplates = ["thai_to_5d", "thai_12w_5d", "thai_to_2d", "thai_nho_2d", "song_thai_12w_5d", "song_thai_to_5d", "song_thai_nho_2d", "song_thai_to_2d"];
     const templates5D = ["thai_to_5d", "thai_12w_5d", "song_thai_to_5d", "song_thai_12w_5d"];
@@ -512,7 +525,11 @@
     function changeTemplate(preventKlReset = false) {
         const selected = document.getElementById('chiDinhSelect').value;
         const tmpl = templates[selected];
-        document.getElementById('printChiDinhLabel').innerText = tmpl.title;
+        
+        // Loại bỏ ngoặc đơn () khi in
+        const printTitle = tmpl.title.replace(/\s*\(.*?\)/g, '');
+        document.getElementById('printChiDinhLabel').innerText = printTitle;
+        
         document.getElementById('dynamicFormContainer').innerHTML = tmpl.html;
         
         if (obsTemplates.includes(selected)) {
@@ -642,10 +659,12 @@
             document.getElementById('chiDinhSelect').value = rec.typeVal; changeTemplate(true);
             const inputs = Array.from(document.querySelectorAll('#printableArea input:not([type="file"]), #printableArea textarea, #printableArea select'));
             inputs.forEach((el, index) => { 
-                if(rec.allInputs[index] !== undefined) { 
-                    el.value = rec.allInputs[index]; 
-                    if(el.type === 'date' || el.type === 'radio') el.dispatchEvent(new Event('change')); 
-                } 
+                if(rec.allInputs.length < inputs.length && index >= 2) {
+                     if(rec.allInputs[index-1] !== undefined) { el.value = rec.allInputs[index-1]; }
+                } else {
+                     if(rec.allInputs[index] !== undefined) { el.value = rec.allInputs[index]; }
+                }
+                if(el.type === 'date' || el.type === 'radio') el.dispatchEvent(new Event('change')); 
             });
             updateGhiChuPrint();
             window.scrollTo({ top: 0, behavior: 'smooth' });
